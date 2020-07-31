@@ -33,14 +33,14 @@ func main() {
 		return
 	}
 
-	// if stdin isn't empty then read its contents
+	// read contents from stdin
 	if stdinHasInput {
 		counts := getCounts(os.Stdin, "stdin")
 		orderedCounts := getOrderedCounts(counts)
 		printCounts("stdin", orderedCounts)
 	}
 
-	// if there were no args then exit otherwise read files
+	// read contents of each file passed as an arg
 	if hasArgs {
 		args := os.Args[1:]
 		for _, arg := range args {
@@ -57,13 +57,14 @@ func main() {
 	}
 }
 
-// getCounts searches through the given file and creates a map of all three
-// word sequences and the number of times each occurs
+// getCounts searches through the given file line by line and creates a map
+// of all three word sequences and the number of times each occurs
 func getCounts(file *os.File, filename string) map[string]int {
 	rx := regexp.MustCompile(`\w+'?(\w+)?`)
 	counts := map[string]int{}
 	scanner := bufio.NewScanner(file)
 	var previous1, previous2 string
+
 	for scanner.Scan() {
 		words := rx.FindAllString(scanner.Text(), -1)
 		for _, word := range words {
@@ -84,9 +85,9 @@ func getCounts(file *os.File, filename string) map[string]int {
 	return counts
 }
 
-// getOrderedCounts copies the contents of the counts map into a slice
-// of Count objects, it then sorts them first by count and then alphabetically
-// by the three word sequence
+// getOrderedCounts copies the contents of the passed in counts map into a slice
+// of Count objects. It then sorts the slice by Count.count and then alphabetically
+// by the three word sequence stored in Count.words
 func getOrderedCounts(counts map[string]int) []Count {
 	orderedCounts := []Count{}
 	for key, value := range counts {

@@ -12,10 +12,11 @@ Using a combination of the two previous methods `echo "one two three four" | ./c
 The output will list the file name (or stdin) and the counts for the top 100 three word sequences.
 ```
 Three word sequence counts for stdin:
-1: four five six - 1
-2: one two three - 1
-3: three four five - 1
-4: two three four - 1
+1: my name is - 50
+2: who ate my - 34
+3: cups on coasters - 15
+4: who are you - 10
+...
 
 Three word sequence counts for file1.txt:
 ...
